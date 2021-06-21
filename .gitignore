@@ -1,3 +1,5 @@
+[include]
+   path = C:\Users\richb\.gitconfig
 #---------------------------  VISUAL STUDIO
 
 ## Ignore Visual Studio temporary files, build results, and
