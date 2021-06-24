@@ -1,6 +1,7 @@
 ﻿using BlogLab.Models.Account;
 using Dapper;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -54,9 +55,23 @@ namespace BlogLab.Repository
             return IdentityResult.Success;
         }
 
-        public Task<ApplicationUserIdentity> GetByUsernameAsync(string normalizedUsername, CancellationToken cancellationToken)
+        public async Task<ApplicationUserIdentity> GetByUsernameAsync(string normalizedUsername, CancellationToken cancellationToken)
         {
-            throw new NotImplementedException();
+            cancellationToken.ThrowIfCancellationRequested();
+
+            ApplicationUserIdentity applicationUser;
+
+            using (var connection = new SqlConnection(_config.GetConnectionString("DefaultConnection")))
+            {
+                await connection.OpenAsync(cancellationToken);
+
+                applicationUser = await connection.QueryFirstOrDefaultAsync<ApplicationUserIdentity>(
+                    "Account_GetByUsername", new { normalizedUsername = normalizedUsername },
+                    commandType: CommandType.StoredProcedure
+                    );
+            }
+
+            return applicationUser;
         }
     }
 }
