@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "1r6A05cqlIxD7UdSsJKw70V/H/C4tR0HicEoIwww7v3iSC4V3xbfIEWauT5OTDFVFfU2/zDz030v9C/RpuaTzw==",
+  "dgSpecHash": "e3iVSG5kGGtGKixDZ3M/sN+7CoGT4rLKm3S62rLODLawb63Qf6o1eVKE2bqcwA+5Np2NOiZtdJtKMxCGO9LXSw==",
   "success": true,
   "projectFilePath": "C:\\source\\repositories\\BlogLab\\BlogLab.Web\\BlogLab.Web.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\richb\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
     "C:\\Users\\richb\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\richb\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\richb\\.nuget\\packages\\swashbuckle.aspnetcore\\5.6.3\\swashbuckle.aspnetcore.5.6.3.nupkg.sha512",
     "C:\\Users\\richb\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\5.6.3\\swashbuckle.aspnetcore.swagger.5.6.3.nupkg.sha512",
     "C:\\Users\\richb\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\5.6.3\\swashbuckle.aspnetcore.swaggergen.5.6.3.nupkg.sha512",
