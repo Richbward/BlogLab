@@ -16,12 +16,12 @@ namespace BlogLab.Web.Controllers
     {
         private readonly ITokenService _tokenservice;
         private readonly UserManager<ApplicationUserIdentity> _userManager;
-        private readonly SignInManager<ApplicationIdentity> _signInManager;
+        private readonly SignInManager<ApplicationUserIdentity> _signInManager;
 
         public AccountController(
             ITokenService tokenservice,
             UserManager<ApplicationUserIdentity> userManager,
-            SignInManager<ApplicationIdentity> signInManager
+            SignInManager<ApplicationUserIdentity> signInManager
             )
         {
             _tokenservice = tokenservice;
@@ -30,17 +30,17 @@ namespace BlogLab.Web.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<ActionResult<ApplicationUser>> Register(ApplicatrionUserCreate applicatrionUserCreate)
+        public async Task<ActionResult<ApplicationUser>> Register(ApplicatrionUserCreate applicationUserCreate)
         {
             var applicationUserIdentity = new ApplicationUserIdentity
             {
-                Username = applicatrionUserCreate.Username,
-                Email = applicatrionUserCreate.Email,
-                Fullname = applicatrionUserCreate.Fullname
+                Username = applicationUserCreate.Username,
+                Email = applicationUserCreate.Email,
+                Fullname = applicationUserCreate.Fullname
             };
 
             var result = await _userManager.CreateAsync(applicationUserIdentity,
-                applicatrionUserCreate.Password);
+                applicationUserCreate.Password);
 
             if (result.Succeeded)
             {
@@ -53,10 +53,41 @@ namespace BlogLab.Web.Controllers
                     Token = _tokenservice.CreateToken(applicationUserIdentity)
                 };
 
-                return user;
+                return Ok(user);
             }
 
             return BadRequest(result.Errors);
+        }
+
+        [HttpPost("login")]
+        public async Task<ActionResult<ApplicationUser>> Login(ApplicationUserLogin applicationUserLogin)
+        {
+            var applicationUserIdentity = await _userManager.FindByNameAsync(applicationUserLogin.Username);
+
+            if (applicationUserIdentity != null)
+            {
+                var result = await _signInManager.CheckPasswordSignInAsync(
+                    applicationUserIdentity,
+                    applicationUserLogin.Password,
+                    false
+                    );
+
+                if (result.Succeeded)
+                {
+                    ApplicationUser applicationUser = new ApplicationUser()
+                    {
+                        Id = applicationUserIdentity.Id,
+                        Username = applicationUserIdentity.Username,
+                        Fullname = applicationUserIdentity.Fullname,
+                        Email = applicationUserIdentity.Email,
+                        Token = _tokenservice.CreateToken(applicationUserIdentity)
+                    };
+
+                    return Ok(applicationUser);
+                }
+            }
+
+            return BadRequest("Invalid login attempt");
         }
     }
 }

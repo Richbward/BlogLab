@@ -53,7 +53,7 @@ namespace BlogLab.Web
             })
                 .AddUserStore<UserStore>()
                 .AddDefaultTokenProviders()
-                .AddSignInManager<SignInManager<ApplicationIdentity>>();
+                .AddSignInManager<SignInManager<ApplicationUserIdentity>>();
 
             services.AddControllers();
             services.AddCors();
@@ -75,9 +75,9 @@ namespace BlogLab.Web
                             ValidateAudience = true,
                             ValidateLifetime = true,
                             ValidateIssuerSigningKey = true,
-                            ValidIssuer = Configuration["Jwt.Issuer"],
-                            ValidAudience = Configuration["Jwt.Issuer"],
-                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt.Issuer"])),
+                            ValidIssuer = Configuration["Jwt:Issuer"],
+                            ValidAudience = Configuration["Jwt:Issuer"],
+                            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["Jwt:Key"])),
                             ClockSkew = TimeSpan.Zero
                         };
                     }
